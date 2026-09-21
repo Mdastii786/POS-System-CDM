@@ -1,0 +1,83 @@
+ConvergEX POS - HOW TO UPDATE AN INSTALLED SYSTEM
+( keep this file in the DEPLOY POS folder )
+=================================================
+
+THE GOLDEN RULE
+  The PROGRAM (app.py, templates, static, the exe) and the DATA
+  (tuckshop.db + the backups / archives / exports folders) are
+  completely separate. Updates replace the program only.
+  You NEVER delete or reinstall anything. The till's sales history,
+  customers, stock and balances live in tuckshop.db and are never
+  in any zip I send you.
+
+-------------------------------------------------
+UPDATE METHOD 1 - the 60-second update (on their PC)
+  Use this when I send you a new tuckshop-deploy.zip
+  (new features, fixes, wording changes):
+
+  1. OPTIONAL PEACE OF MIND: copy tuckshop.db to the desktop
+     (10 seconds - the app also auto-saves a backup into the
+     backups\ folder every time it closes, so you're double-safe).
+  2. Close ConvergEX POS if it's open.
+  3. Extract tuckshop-deploy.zip straight into the DEPLOY POS
+     folder - click "Replace all" when Windows asks.
+  4. Double-click FIX-IT.bat and wait for SUCCESS!
+     (It closes stuck copies, rebuilds the exe, restarts the app.
+      If the black window seems frozen: press Enter once -
+      clicking inside it pauses it. Look for "Select" in its title.)
+  5. The app opens on its own. Ring up one test sale to see it working
+     - that's your proof the update is live.
+  DONE. All data, customers and balances are exactly as they were.
+
+-------------------------------------------------
+UPDATE METHOD 2 - the 30-second exe swap (fastest on-site)
+  Best when the customer's PC has NO Python or you're in a hurry.
+  You build ONCE on your own laptop, then just carry the exe:
+
+  ON YOUR LAPTOP (once):
+  1. Extract the new zip into your DEPLOY POS folder, replace all.
+  2. Run FIX-IT.bat -> it builds dist\ConvergEXPOS.exe.
+  3. Put ONLY that ConvergEXPOS.exe on a USB stick.
+
+  ON THE CUSTOMER'S PC:
+  4. Close ConvergEX POS.
+  5. Copy the new ConvergEXPOS.exe over the old one
+     (wherever the old one lives - e.g. dist\ next to their data).
+  6. Double-click it. It finds the existing tuckshop.db itself,
+     upgrades anything it needs, and opens.
+  DONE. Nothing else is touched.
+
+-------------------------------------------------
+SMALL TWEAKS WITHOUT A ZIP (e.g. card fee %)
+  The card fee percent is one line near the top of app.py:
+      CARD_FEE_PERCENT = 2.5
+  Edit it in Notepad, save, run FIX-IT.bat - that's the update.
+  (Or just tell me and I'll send a fresh zip - safer.)
+
+-------------------------------------------------
+THE SECOND LAPTOP NEEDS NOTHING
+  It only opens the app in a browser. After an update on the main
+  till, press Ctrl + F5 there once. That's its whole "update".
+
+-------------------------------------------------
+NEVER TOUCH THESE ON A CUSTOMER'S PC
+  tuckshop.db        <- their whole business lives here
+  backups\           <- automatic daily safety copies
+  archives\          <- month-end archives
+  exports\           <- Excel reports the app saved
+  secret.key         <- login security file
+  (If a zip I send ever contains these, refuse it - it shouldn't.)
+
+IF THEY EVER LOSE EVERYTHING (BUILD 20+)
+  1. In the app: Reports -> EXPORTS & ARCHIVE -> BACK UP NOW saves a
+     timestamped copy into backups\ .
+  2. RESTORE SELECTED BACKUP right under it puts any backup back.
+  3. Golden habit: copy the backups\ folder onto a USB once a week.
+     If the PC dies completely: install fresh, then drop the newest
+     backup file next to the exe and rename it tuckshop.db - done.
+
+PROBLEMS DURING AN UPDATE?
+  - FIX-IT shows an error: it opens fix_log.txt - photo it, send it to me.
+  - App looks wrong after update: press Ctrl + F5.
+  - Worst case: their backups\ folder has today's database - nothing
+    is ever truly lost.

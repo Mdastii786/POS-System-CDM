@@ -1,0 +1,39 @@
+HOW TO MAKE ConvergEXPOS.exe
+============================
+
+IMPORTANT: an .exe can only be built ON Windows (PyInstaller does not
+cross-compile). Do these steps on the actual till PC (Windows 10/11).
+
+STEP 1 - Install Python (one time)
+  - python.org -> Downloads -> Windows installer
+  - TICK the box "Add python.exe to PATH" on the first screen.
+
+STEP 2 - Extract this folder
+  - Put app.py, build.bat, templates\ and static\ in one folder,
+    e.g. C:\ConvergEXPOS\
+
+STEP 3 - Double-click build.bat
+  - First run downloads some packages (needs internet, ~5 min).
+  - When it says SUCCESS your program is at  dist\ConvergEXPOS.exe
+
+STEP 4 - Use it
+  - Move dist\ConvergEXPOS.exe wherever you want (Desktop is fine).
+  - Double-click to run - a desktop window opens with the POS.
+  - The database (tuckshop.db), backups\, archives\ and exports\
+    are created NEXT TO the exe, so the exe can live anywhere.
+  - To keep data when upgrading to a new exe later: copy tuckshop.db
+    next to the new exe.
+
+TROUBLESHOOTING
+  - Exe closes instantly / errors invisible:
+      build WITHOUT --windowed (console stays open and shows errors):
+      py -m PyInstaller --noconfirm --clean --onefile --name ConvergEXPOS ^
+        --add-data "templates;templates" --add-data "static;static" ^
+        --collect-all webview app.py
+  - "Desktop window failed": the app automatically opens in your
+      browser instead (http://127.0.0.1:5000) - updating Microsoft Edge
+      (WebView2 runtime) fixes the desktop window. Win11 usually has it.
+  - Antivirus warning: PyInstaller exes sometimes get false positives;
+      add the exe to the antivirus allow-list. Windows Defender
+      SmartScreen: "More info -> Run anyway".
+  - Port already in use: another copy of the app is running - close it.
